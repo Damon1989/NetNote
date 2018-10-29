@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
 using NetNote.Models;
 using NetNote.ViewModel;
 using System;
@@ -15,14 +16,22 @@ namespace NetNote.Controllers
         private readonly INoteRepository _noteRepository;
         private readonly INoteTypeRepository _noteTypeRepository;
 
-        public NoteController(INoteRepository noteRepository, INoteTypeRepository noteTypeRepository)
+        private readonly ILogger<NoteController> _logger;
+
+
+        public NoteController(INoteRepository noteRepository, INoteTypeRepository noteTypeRepository,ILogger<NoteController> logger)
         {
             _noteRepository = noteRepository;
             _noteTypeRepository = noteTypeRepository;
+            _logger = logger;
         }
 
         public async Task<IActionResult> Index(int pageIndex = 1)
         {
+            _logger.LogInformation("您访问了Note首页");
+            _logger.LogWarning("警告消息");
+            _logger.LogError("错误消息");
+
             var pagesize = 10;
             var notes = _noteRepository.PageList(pageIndex, pagesize);
             ViewBag.PageCount = notes.Item2;
