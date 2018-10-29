@@ -1,5 +1,3 @@
-using System;
-
 namespace NetNote.Models
 {
     public class ErrorViewModel
